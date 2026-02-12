@@ -23,16 +23,39 @@ export const UIOverlay = () => {
 
     if (gameState === 'welcome') {
         return (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
-                <div className="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md animate-bounce-in">
-                    <h1 className="text-4xl font-bold text-valentine-red mb-4">Valentine's Memory Journey</h1>
-                    <p className="text-gray-600 mb-6">Explore the world, collect hearts (JUMP with Space!), and find your way to the special surprise.</p>
+            <div className="absolute inset-0 flex items-center justify-center bg-pink-100 z-50">
+                {/* Valentine's Card Container */}
+                <div className="relative w-full max-w-lg aspect-[3/4] bg-white shadow-2xl rounded-lg p-8 border-8 border-pink-200 flex flex-col items-center justify-center text-center transform hover:scale-105 transition-transform duration-500 cursor-pointer"
+                    onClick={() => useGameStore.getState().setGameState('playing')}
+                >
+                    {/* Decorative Hearts */}
+                    <div className="absolute top-4 left-4 text-4xl animate-bounce">❤️</div>
+                    <div className="absolute top-4 right-4 text-4xl animate-bounce" style={{ animationDelay: '0.2s' }}>❤️</div>
+                    <div className="absolute bottom-4 left-4 text-4xl animate-bounce" style={{ animationDelay: '0.4s' }}>❤️</div>
+                    <div className="absolute bottom-4 right-4 text-4xl animate-bounce" style={{ animationDelay: '0.6s' }}>❤️</div>
+
+                    <h1 className="text-6xl text-valentine-red mb-8" style={{ fontFamily: 'Great Vibes, cursive' }}>
+                        Happy Valentine's Day
+                    </h1>
+
+                    <div className="text-2xl text-gray-700 mb-8 font-serif italic">
+                        <p className="mb-2">To: My Love</p>
+                        <p>From: Your Favorite Raccoon 🦝</p>
+                    </div>
+
+                    <p className="text-pink-500 mb-10 text-lg font-light">
+                        I've hidden 5 of our special memories in this world.<br />
+                        Can you find them all?
+                    </p>
+
                     <button
-                        className="bg-valentine-red text-white px-8 py-3 rounded-full text-xl font-bold hover:bg-red-600 transition-transform hover:scale-105"
-                        onClick={() => useGameStore.getState().setGameState('playing')}
+                        className="bg-valentine-red text-white px-10 py-4 rounded-full text-2xl font-bold shadow-lg hover:bg-red-600 hover:shadow-xl transition-all animate-pulse"
+                        style={{ fontFamily: 'Dancing Script, cursive' }}
                     >
-                        Start Journey
+                        Open Your Gift 🎁
                     </button>
+
+                    <p className="mt-4 text-sm text-gray-400">(Click anywhere to start)</p>
                 </div>
             </div>
         );
