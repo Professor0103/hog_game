@@ -7,9 +7,9 @@ function App() {
     return (
         <ErrorBoundary>
             <div className="w-full h-screen relative bg-valentine-pink/20">
-                <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center text-valentine-red font-bold text-2xl animate-pulse">Loading Love...</div>}>
-                    <GameScene />
-                </Suspense>
+                {/* <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center text-valentine-red font-bold text-2xl">Loading 3D Scene...</div>}> */}
+                <GameScene />
+                {/* </Suspense> */}
                 <UIOverlay />
             </div>
         </ErrorBoundary>
