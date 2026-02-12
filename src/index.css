@@ -11,8 +11,8 @@ body,
     height: 100vh;
     min-height: -webkit-fill-available;
     /* Mobile fix */
-    overflow: hidden;
-    /* Prevent scrollbars */
+    overflow: auto;
+    /* Enable scrollbars as requested */
     background-color: #ffe4e6;
     /* Soft Warm Pink */
 }

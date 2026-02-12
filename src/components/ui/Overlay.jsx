@@ -24,53 +24,60 @@ export const UIOverlay = () => {
 
     if (gameState === 'welcome') {
         return (
-            <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 99999, background: 'linear-gradient(to bottom right, #ffe4e6, #f3e8ff)' }}>
-                {/* Background Floating Hearts */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    {[...Array(40)].map((_, i) => (
-                        <div key={i}
-                            className="absolute text-pink-300 animate-float select-none"
-                            style={{
-                                left: `${Math.random() * 100}%`,
-                                top: `${Math.random() * 100}%`,
-                                fontSize: `${Math.random() * 3 + 2}rem`,
-                                animationDelay: `${Math.random() * 5}s`,
-                                animationDuration: `${Math.random() * 10 + 10}s`,
-                                opacity: 0.3 + Math.random() * 0.4
-                            }}
-                        >
-                            ❤️
-                        </div>
-                    ))}
-                </div>
+            // Scrollable Container
+            <div className="w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 overflow-auto">
+                <div style={{ minWidth: '150vw', minHeight: '150vh', position: 'relative' }}>
 
-                {/* Main Content - Centered Absolutely */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-[90vw] max-w-4xl bg-white/80 p-10 rounded-3xl shadow-2xl border-4 border-white">
-                    <div className="text-8xl text-pink-500 mb-6 drop-shadow-md animate-bounce">
-                        💗
+                    {/* Background Floating Hearts - Scattered across large area */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                        {[...Array(60)].map((_, i) => (
+                            <div key={i}
+                                className="absolute text-pink-300 animate-float select-none"
+                                style={{
+                                    left: `${Math.random() * 100}%`,
+                                    top: `${Math.random() * 100}%`,
+                                    fontSize: `${Math.random() * 3 + 2}rem`,
+                                    animationDelay: `${Math.random() * 5}s`,
+                                    animationDuration: `${Math.random() * 10 + 10}s`,
+                                    opacity: 0.3 + Math.random() * 0.4
+                                }}
+                            >
+                                ❤️
+                            </div>
+                        ))}
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-4 leading-tight">
-                        Happy Valentine's <br /> Day,
-                    </h1>
-                    <h1 className="text-6xl md:text-8xl font-bold text-pink-600 mb-10" style={{ fontFamily: 'Great Vibes, cursive' }}>
-                        My Love! 💕
-                    </h1>
+                    {/* Main Content - Centered in the large scrollable area */}
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-[90vw] max-w-4xl bg-white/80 p-10 rounded-3xl shadow-2xl border-4 border-white">
+                        <div className="text-8xl text-pink-500 mb-6 drop-shadow-md animate-bounce">
+                            💗
+                        </div>
 
-                    <p className="text-gray-800 text-xl md:text-3xl mb-12 font-light">
-                        I've created something special for you — a journey through our most beautiful memories together.
-                    </p>
+                        <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-4 leading-tight">
+                            Happy Valentine's <br /> Day,
+                        </h1>
+                        <h1 className="text-6xl md:text-8xl font-bold text-pink-600 mb-10" style={{ fontFamily: 'Great Vibes, cursive' }}>
+                            My Love! 💕
+                        </h1>
 
-                    <button
-                        onClick={() => useGameStore.getState().setGameState('playing')}
-                        className="inline-block px-12 py-6 text-2xl font-bold text-white bg-pink-500 rounded-full shadow-xl hover:bg-pink-600 hover:scale-105 transition-transform cursor-pointer"
-                    >
-                        Begin Our Journey ➜
-                    </button>
+                        <p className="text-gray-800 text-xl md:text-3xl mb-12 font-light">
+                            I've created something special for you — a journey through our most beautiful memories together.
+                        </p>
 
-                    <p className="mt-8 text-pink-500 font-bold uppercase text-sm tracking-widest animate-pulse">
-                        ✨ Collect hearts to unlock memories ✨
-                    </p>
+                        <button
+                            onClick={() => useGameStore.getState().setGameState('playing')}
+                            className="inline-block px-12 py-6 text-2xl font-bold text-white bg-pink-500 rounded-full shadow-xl hover:bg-pink-600 hover:scale-105 transition-transform cursor-pointer"
+                        >
+                            Begin Our Journey ➜
+                        </button>
+
+                        <p className="mt-8 text-pink-500 font-bold uppercase text-sm tracking-widest animate-pulse">
+                            ✨ Collect hearts to unlock memories ✨
+                        </p>
+                        <p className="mt-4 text-gray-400 text-xs">
+                            (Scroll around to explore!)
+                        </p>
+                    </div>
                 </div>
             </div>
         );
