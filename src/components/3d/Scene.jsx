@@ -14,7 +14,9 @@ export const GameScene = () => {
     const heartPositions = [
         [-3, 2.2, -2],
         [3, 2.2, -5],
-        [0, 2.2, -8]
+        [0, 2.2, -8],
+        [-4, 2.2, -12], // New
+        [4, 2.2, -10]   // New
     ];
 
     // Random trees

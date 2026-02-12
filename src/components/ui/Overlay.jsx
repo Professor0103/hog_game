@@ -82,11 +82,13 @@ export const UIOverlay = () => {
         )
     }
 
+    const totalHearts = useGameStore(state => state.totalHearts);
+
     return (
         <div className="absolute top-4 left-4 z-10">
             <div className="bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow-lg border-2 border-valentine-pink">
                 <span className="text-valentine-red font-bold text-xl">
-                    Hearts: {heartsCollected} / 3
+                    Hearts: {heartsCollected} / {totalHearts}
                 </span>
             </div>
         </div>

@@ -3,13 +3,15 @@ import { create } from 'zustand';
 export const useGameStore = create((set) => ({
     gameState: 'welcome', // welcome, playing, memory_view, dialogue, finished
     heartsCollected: 0,
-    totalHearts: 3,
+    totalHearts: 5,
 
     // Memories data (placeholder for now)
     memories: [
-        { id: 1, title: "The First Date", text: "Remember when we went to that cafe...", image: null, collected: false },
-        { id: 2, title: "The Road Trip", text: "Driving through the mountains...", image: null, collected: false },
-        { id: 3, title: "Lazy Sunday", text: "Just staying in and watching movies...", image: null, collected: false },
+        { id: 1, title: 'First Meeting', text: 'I remember the first time I saw you...', collected: false },
+        { id: 2, title: 'Our First Date', text: 'That dinner was magical...', collected: false },
+        { id: 3, title: 'Adventures', text: 'Every trip with you is an adventure...', collected: false },
+        { id: 4, title: 'Laughter', text: 'Your smile lights up my world...', collected: false },
+        { id: 5, title: 'Future', text: 'I cannot wait for what comes next...', collected: false },
     ],
     currentMemory: null,
 
