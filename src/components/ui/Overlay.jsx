@@ -24,65 +24,52 @@ export const UIOverlay = () => {
 
     if (gameState === 'welcome') {
         return (
-            <div className="fixed inset-0 w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 z-[9999] flex items-center justify-center p-4">
-                {/* Background Floating Hearts - Evenly Distributed */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                    {[...Array(25)].map((_, i) => {
-                        // Grid Distribution: 5 columns x 5 rows
-                        const cols = 5;
-                        const rows = 5;
-                        const col = i % cols;
-                        const row = Math.floor(i / cols);
-
-                        // Add some randomness within grid cell
-                        const left = (col / cols) * 100 + Math.random() * (100 / cols) * 0.5; // Randomness within 50% of cell width
-                        const top = (row / rows) * 100 + Math.random() * (100 / rows) * 0.5; // Randomness within 50% of cell height
-
-                        return (
-                            <div key={i}
-                                className="absolute text-pink-300 animate-float select-none transition-opacity duration-[3000ms] animate-pulse-opacity"
-                                style={{
-                                    left: `${left}%`,
-                                    top: `${top}%`,
-                                    fontSize: `${Math.random() * 3 + 1.5}rem`,
-                                    animationDelay: `${Math.random() * 5}s`,
-                                    animationDuration: `${Math.random() * 5 + 6}s`, // Slower float
-                                    // Opacity will be handled by animate-pulse-opacity CSS class
-                                }}
-                            >
-                                ❤️
-                            </div>
-                        );
-                    })}
+            <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 99999, background: 'linear-gradient(to bottom right, #ffe4e6, #f3e8ff)' }}>
+                {/* Background Floating Hearts */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    {[...Array(40)].map((_, i) => (
+                        <div key={i}
+                            className="absolute text-pink-300 animate-float select-none"
+                            style={{
+                                left: `${Math.random() * 100}%`,
+                                top: `${Math.random() * 100}%`,
+                                fontSize: `${Math.random() * 3 + 2}rem`,
+                                animationDelay: `${Math.random() * 5}s`,
+                                animationDuration: `${Math.random() * 10 + 10}s`,
+                                opacity: 0.3 + Math.random() * 0.4
+                            }}
+                        >
+                            ❤️
+                        </div>
+                    ))}
                 </div>
 
-                {/* Main Content */}
-                <div className="relative z-[10000] text-center w-full max-w-4xl mx-auto flex flex-col items-center justify-center bg-white/30 backdrop-blur-sm p-8 rounded-3xl shadow-xl border border-white/50 animate-fade-in-up">
-                    <div className="text-6xl md:text-8xl text-pink-500 mb-4 drop-shadow-md animate-bounce">
+                {/* Main Content - Centered Absolutely */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-[90vw] max-w-4xl bg-white/80 p-10 rounded-3xl shadow-2xl border-4 border-white">
+                    <div className="text-8xl text-pink-500 mb-6 drop-shadow-md animate-bounce">
                         💗
                     </div>
 
-                    <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-2 leading-tight tracking-tight drop-shadow-sm">
+                    <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-4 leading-tight">
                         Happy Valentine's <br /> Day,
                     </h1>
-                    <h1 className="text-5xl md:text-8xl font-bold text-pink-600 mb-6 leading-tight drop-shadow-lg" style={{ fontFamily: 'Great Vibes, cursive' }}>
+                    <h1 className="text-6xl md:text-8xl font-bold text-pink-600 mb-10" style={{ fontFamily: 'Great Vibes, cursive' }}>
                         My Love! 💕
                     </h1>
 
-                    <p className="text-gray-800 text-lg md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed font-light">
-                        I've created something special for you — a 3D journey through our most beautiful memories together.
+                    <p className="text-gray-800 text-xl md:text-3xl mb-12 font-light">
+                        I've created something special for you — a journey through our most beautiful memories together.
                     </p>
 
                     <button
                         onClick={() => useGameStore.getState().setGameState('playing')}
-                        className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white transition-all duration-300 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full shadow-2xl hover:scale-110 hover:shadow-pink-500/50 ring-4 ring-pink-200 hover:ring-pink-400 cursor-pointer"
+                        className="inline-block px-12 py-6 text-2xl font-bold text-white bg-pink-500 rounded-full shadow-xl hover:bg-pink-600 hover:scale-105 transition-transform cursor-pointer"
                     >
-                        <span>Begin Our Journey</span>
-                        <span className="ml-3 text-2xl group-hover:translate-x-2 transition-transform">➜</span>
+                        Begin Our Journey ➜
                     </button>
 
-                    <p className="mt-6 text-pink-600 font-bold tracking-wide uppercase text-sm animate-pulse bg-white/50 px-4 py-1 rounded-full">
-                        ✨ Collect all 5 hearts to unlock a surprise ✨
+                    <p className="mt-8 text-pink-500 font-bold uppercase text-sm tracking-widest animate-pulse">
+                        ✨ Collect hearts to unlock memories ✨
                     </p>
                 </div>
             </div>
