@@ -2,19 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body,
-#root {
+html {
     margin: 0;
     padding: 0;
-    width: 100vw;
-    height: 100vh;
-    min-height: -webkit-fill-available;
-    /* Mobile fix */
-    overflow: auto;
-    /* Enable scrollbars as requested */
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
     background-color: #ffe4e6;
-    /* Soft Warm Pink */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    overflow: hidden;
+    background-color: #ffe4e6;
+}
+
+#root {
+    display: block;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    background-color: #ffe4e6;
 }
 
 canvas {
@@ -40,4 +61,15 @@ canvas {
 
 .animate-float {
     animation: float 6s ease-in-out infinite;
+}
+
+/* Full viewport height (use 100dvh when supported so mobile browser chrome doesn't push content down) */
+.min-h-viewport {
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.h-viewport {
+    height: 100vh;
+    height: 100dvh;
 }

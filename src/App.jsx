@@ -9,11 +9,13 @@ function App() {
 
     return (
         <ErrorBoundary>
-            <div className="w-full h-full relative bg-pink-50">
+            <div className="fixed inset-0 w-full h-full bg-pink-50" style={{ width: '100vw', height: '100vh', height: '100dvh' }}>
                 {gameState !== 'welcome' && (
-                    <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center text-valentine-red font-bold text-2xl animate-pulse">Loading Love...</div>}>
-                        <GameScene />
-                    </Suspense>
+                    <div className="absolute inset-0 w-full h-full" style={{ width: '100%', height: '100%' }}>
+                        <Suspense fallback={<div className="absolute inset-0 flex items-center justify-center text-valentine-red font-bold text-2xl animate-pulse">Loading Love...</div>}>
+                            <GameScene />
+                        </Suspense>
+                    </div>
                 )}
                 <UIOverlay />
             </div>

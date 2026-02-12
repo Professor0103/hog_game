@@ -26,7 +26,8 @@ export const GameScene = () => {
     ];
 
     return (
-        <Canvas shadows camera={{ position: [0, 5, 10], fov: 50 }}>
+        <div className="absolute inset-0 w-full h-full" style={{ width: '100%', height: '100%', minHeight: '100vh' }}>
+            <Canvas shadows camera={{ position: [0, 5, 10], fov: 50 }} style={{ width: '100%', height: '100%', display: 'block' }} gl={{ dpr: [1, 2] }}>
             {/* Natural Environment */}
             <Sky sunPosition={[100, 10, 100]} turbidity={0.3} rayleigh={0.5} mieCoefficient={0.005} mieDirectionalG={0.8} />
             <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
@@ -55,5 +56,6 @@ export const GameScene = () => {
 
             <ContactShadows opacity={0.4} scale={20} blur={2} far={10} resolution={256} color="#000000" />
         </Canvas>
+        </div>
     );
 };
