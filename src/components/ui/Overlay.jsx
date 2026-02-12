@@ -23,40 +23,53 @@ export const UIOverlay = () => {
 
     if (gameState === 'welcome') {
         return (
-            // Full screen intro page
-            <div className="absolute inset-0 flex items-center justify-center bg-pink-100 z-50">
-                {/* Valentine's Card Container - Centered and Elegant */}
-                <div className="relative w-full max-w-lg aspect-[3/4] bg-white shadow-2xl rounded-xl p-10 border-[12px] border-pink-200 flex flex-col items-center justify-center text-center transform hover:scale-[1.02] transition-transform duration-500 cursor-pointer"
-                    onClick={() => useGameStore.getState().setGameState('playing')}
-                >
-                    {/* Decorative Hearts */}
-                    <div className="absolute top-4 left-4 text-4xl animate-bounce">❤️</div>
-                    <div className="absolute top-4 right-4 text-4xl animate-bounce" style={{ animationDelay: '0.2s' }}>❤️</div>
-                    <div className="absolute bottom-4 left-4 text-4xl animate-bounce" style={{ animationDelay: '0.4s' }}>❤️</div>
-                    <div className="absolute bottom-4 right-4 text-4xl animate-bounce" style={{ animationDelay: '0.6s' }}>❤️</div>
+            <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 z-50">
+                {/* Background Floating Hearts */}
+                <div className="absolute inset-0 pointer-events-none">
+                    {[...Array(15)].map((_, i) => (
+                        <div key={i}
+                            className="absolute text-pink-300 animate-float"
+                            style={{
+                                left: `${Math.random() * 100}%`,
+                                top: `${Math.random() * 100}%`,
+                                fontSize: `${Math.random() * 2 + 1}rem`,
+                                animationDelay: `${Math.random() * 5}s`,
+                                animationDuration: `${Math.random() * 5 + 5}s`
+                            }}
+                        >
+                            ❤️
+                        </div>
+                    ))}
+                </div>
 
-                    <h1 className="text-6xl text-valentine-red mb-8" style={{ fontFamily: 'Great Vibes, cursive' }}>
-                        Happy Valentine's Day
-                    </h1>
-
-                    <div className="text-2xl text-gray-700 mb-8 font-serif italic">
-                        <p className="mb-2">To: My Love</p>
-                        <p>From: Your Favorite Raccoon 🦝</p>
+                {/* Main Content */}
+                <div className="z-10 text-center px-4 max-w-2xl animate-fade-in-up">
+                    <div className="text-6xl text-pink-500 mb-6 drop-shadow-sm animate-pulse">
+                        💗
                     </div>
 
-                    <p className="text-pink-500 mb-10 text-lg font-light">
-                        I've hidden 5 of our special memories in this world.<br />
-                        Can you find them all?
+                    <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-2 leading-tight tracking-tight">
+                        Happy Valentine's <br /> Day,
+                    </h1>
+                    <h1 className="text-5xl md:text-7xl font-bold text-pink-500 mb-8 leading-tight drop-shadow-sm" style={{ fontFamily: 'Great Vibes, cursive' }}>
+                        My Love! 💕
+                    </h1>
+
+                    <p className="text-gray-600 text-lg md:text-xl mb-10 max-w-lg mx-auto leading-relaxed">
+                        I've created something special for you — a journey through our most beautiful memories together.
                     </p>
 
                     <button
-                        className="bg-valentine-red text-white px-10 py-4 rounded-full text-2xl font-bold shadow-lg hover:bg-red-600 hover:shadow-xl transition-all animate-pulse"
-                        style={{ fontFamily: 'Dancing Script, cursive' }}
+                        onClick={() => useGameStore.getState().setGameState('playing')}
+                        className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 hover:scale-105 shadow-xl hover:shadow-2xl"
                     >
-                        Open Your Gift 🎁
+                        <span>Begin Our Journey</span>
+                        <span className="ml-2 text-xl group-hover:translate-x-1 transition-transform">➜</span>
                     </button>
 
-                    <p className="mt-4 text-sm text-gray-400">(Click anywhere to start)</p>
+                    <p className="mt-8 text-sm text-pink-400 font-medium tracking-wide uppercase">
+                        Collect hearts to unlock our memories ✨
+                    </p>
                 </div>
             </div>
         );

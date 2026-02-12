@@ -17,3 +17,24 @@ body {
 canvas {
     touch-action: none;
 }
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translateY(-20px);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(0px);
+        opacity: 0.5;
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
