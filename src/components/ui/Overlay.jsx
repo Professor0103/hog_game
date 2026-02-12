@@ -24,18 +24,19 @@ export const UIOverlay = () => {
 
     if (gameState === 'welcome') {
         return (
-            <div className="fixed inset-0 flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 z-50">
+            <div className="fixed top-0 left-0 w-screen h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 z-[9999]">
                 {/* Background Floating Hearts */}
-                <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(20)].map((_, i) => (
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    {[...Array(50)].map((_, i) => (
                         <div key={i}
-                            className="absolute text-pink-300 animate-float opacity-50"
+                            className="absolute text-pink-300 animate-float opacity-40 select-none"
                             style={{
-                                left: `${Math.random() * 100}%`,
-                                top: `${Math.random() * 100}%`,
-                                fontSize: `${Math.random() * 3 + 1}rem`,
+                                left: `${Math.random() * 120 - 10}%`,
+                                top: `${Math.random() * 120 - 10}%`,
+                                fontSize: `${Math.random() * 4 + 1}rem`,
                                 animationDelay: `${Math.random() * 5}s`,
-                                animationDuration: `${Math.random() * 10 + 10}s`
+                                animationDuration: `${Math.random() * 10 + 10}s`,
+                                transform: `rotate(${Math.random() * 360}deg)`
                             }}
                         >
                             ❤️
@@ -44,25 +45,25 @@ export const UIOverlay = () => {
                 </div>
 
                 {/* Main Content */}
-                <div className="z-10 flex flex-col items-center justify-center text-center px-4 max-w-4xl w-full animate-fade-in-up">
-                    <div className="text-7xl md:text-8xl text-pink-500 mb-6 drop-shadow-md animate-bounce">
+                <div className="z-10 flex flex-col items-center justify-center text-center px-4 max-w-[90vw] w-full animate-fade-in-up">
+                    <div className="text-6xl md:text-8xl text-pink-500 mb-6 drop-shadow-md animate-bounce">
                         💗
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-2 leading-tight tracking-tight drop-shadow-sm">
+                    <h1 className="text-4xl md:text-7xl font-bold text-gray-800 mb-2 leading-tight tracking-tight drop-shadow-sm">
                         Happy Valentine's <br /> Day,
                     </h1>
-                    <h1 className="text-6xl md:text-8xl font-bold text-pink-600 mb-8 leading-tight drop-shadow-lg" style={{ fontFamily: 'Great Vibes, cursive' }}>
+                    <h1 className="text-5xl md:text-8xl font-bold text-pink-600 mb-8 leading-tight drop-shadow-lg" style={{ fontFamily: 'Great Vibes, cursive' }}>
                         My Love! 💕
                     </h1>
 
-                    <p className="text-gray-700 text-xl md:text-2xl mb-12 max-w-2xl mx-auto leading-relaxed font-light">
+                    <p className="text-gray-700 text-lg md:text-2xl mb-12 max-w-2xl mx-auto leading-relaxed font-light">
                         I've created something special for you — a 3D journey through our most beautiful memories together.
                     </p>
 
                     <button
                         onClick={() => useGameStore.getState().setGameState('playing')}
-                        className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white transition-all duration-300 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full shadow-2xl hover:scale-110 hover:shadow-pink-500/50 ring-4 ring-pink-200 hover:ring-pink-400"
+                        className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-white transition-all duration-300 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full shadow-2xl hover:scale-110 hover:shadow-pink-500/50 ring-4 ring-pink-200 hover:ring-pink-400 cursor-pointer"
                     >
                         <span>Begin Our Journey</span>
                         <span className="ml-3 text-2xl group-hover:translate-x-2 transition-transform">➜</span>
