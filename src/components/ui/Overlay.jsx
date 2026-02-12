@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGameStore } from '../../store/gameStore';
 
 export const UIOverlay = () => {
@@ -6,13 +6,27 @@ export const UIOverlay = () => {
     const heartsCollected = useGameStore(state => state.heartsCollected);
     const currentMemory = useGameStore(state => state.currentMemory);
     const closeMemory = useGameStore(state => state.closeMemory);
+    const dialogueStep = useGameStore(state => state.dialogueStep);
+    const dialogueLines = useGameStore(state => state.dialogueLines);
+    const nextDialogue = useGameStore(state => state.nextDialogue);
+
+    // FIX: Hooks must be at the top level
+    useEffect(() => {
+        const handleKey = (e) => {
+            if ((e.code === 'Space' || e.code === 'Enter') && gameState === 'memory_view') {
+                closeMemory();
+            }
+        };
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, [gameState, closeMemory]);
 
     if (gameState === 'welcome') {
         return (
             <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
                 <div className="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md animate-bounce-in">
                     <h1 className="text-4xl font-bold text-valentine-red mb-4">Valentine's Memory Journey</h1>
-                    <p className="text-gray-600 mb-6">Explore the world, collect hearts, and find your way to the special surprise.</p>
+                    <p className="text-gray-600 mb-6">Explore the world, collect hearts (JUMP with Space!), and find your way to the special surprise.</p>
                     <button
                         className="bg-valentine-red text-white px-8 py-3 rounded-full text-xl font-bold hover:bg-red-600 transition-transform hover:scale-105"
                         onClick={() => useGameStore.getState().setGameState('playing')}
@@ -44,17 +58,6 @@ export const UIOverlay = () => {
             </div>
         );
     }
-
-    // Quick effect for keyboard closing
-    React.useEffect(() => {
-        const handleKey = (e) => {
-            if ((e.code === 'Space' || e.code === 'Enter') && gameState === 'memory_view') {
-                closeMemory();
-            }
-        };
-        window.addEventListener('keydown', handleKey);
-        return () => window.removeEventListener('keydown', handleKey);
-    }, [gameState, closeMemory]);
 
     if (gameState === 'dialogue') {
         return (
