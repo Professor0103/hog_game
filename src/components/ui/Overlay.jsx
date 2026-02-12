@@ -24,9 +24,9 @@ export const UIOverlay = () => {
 
     if (gameState === 'welcome') {
         return (
-            <div className="fixed top-0 left-0 w-screen h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 z-[9999]">
+            <div className="fixed inset-0 w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 z-[9999] flex items-center justify-center p-4">
                 {/* Background Floating Hearts */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     {[...Array(50)].map((_, i) => (
                         <div key={i}
                             className="absolute text-pink-300 animate-float opacity-40 select-none"
@@ -45,19 +45,19 @@ export const UIOverlay = () => {
                 </div>
 
                 {/* Main Content */}
-                <div className="z-10 flex flex-col items-center justify-center text-center px-4 max-w-[90vw] w-full animate-fade-in-up">
-                    <div className="text-6xl md:text-8xl text-pink-500 mb-6 drop-shadow-md animate-bounce">
+                <div className="relative z-[10000] text-center w-full max-w-4xl mx-auto flex flex-col items-center justify-center bg-white/30 backdrop-blur-sm p-8 rounded-3xl shadow-xl border border-white/50 animate-fade-in-up">
+                    <div className="text-6xl md:text-8xl text-pink-500 mb-4 drop-shadow-md animate-bounce">
                         💗
                     </div>
 
-                    <h1 className="text-4xl md:text-7xl font-bold text-gray-800 mb-2 leading-tight tracking-tight drop-shadow-sm">
+                    <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-2 leading-tight tracking-tight drop-shadow-sm">
                         Happy Valentine's <br /> Day,
                     </h1>
-                    <h1 className="text-5xl md:text-8xl font-bold text-pink-600 mb-8 leading-tight drop-shadow-lg" style={{ fontFamily: 'Great Vibes, cursive' }}>
+                    <h1 className="text-5xl md:text-8xl font-bold text-pink-600 mb-6 leading-tight drop-shadow-lg" style={{ fontFamily: 'Great Vibes, cursive' }}>
                         My Love! 💕
                     </h1>
 
-                    <p className="text-gray-700 text-lg md:text-2xl mb-12 max-w-2xl mx-auto leading-relaxed font-light">
+                    <p className="text-gray-800 text-lg md:text-2xl mb-8 max-w-2xl mx-auto leading-relaxed font-light">
                         I've created something special for you — a 3D journey through our most beautiful memories together.
                     </p>
 
@@ -69,7 +69,7 @@ export const UIOverlay = () => {
                         <span className="ml-3 text-2xl group-hover:translate-x-2 transition-transform">➜</span>
                     </button>
 
-                    <p className="mt-8 text-pink-500 font-semibold tracking-wide uppercase text-sm animate-pulse">
+                    <p className="mt-6 text-pink-600 font-bold tracking-wide uppercase text-sm animate-pulse bg-white/50 px-4 py-1 rounded-full">
                         ✨ Collect all 5 hearts to unlock a surprise ✨
                     </p>
                 </div>
