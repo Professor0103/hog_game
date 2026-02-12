@@ -25,23 +25,35 @@ export const UIOverlay = () => {
     if (gameState === 'welcome') {
         return (
             <div className="fixed inset-0 w-full h-full bg-gradient-to-br from-pink-100 via-purple-100 to-pink-200 z-[9999] flex items-center justify-center p-4">
-                {/* Background Floating Hearts */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    {[...Array(50)].map((_, i) => (
-                        <div key={i}
-                            className="absolute text-pink-300 animate-float opacity-40 select-none"
-                            style={{
-                                left: `${Math.random() * 120 - 10}%`,
-                                top: `${Math.random() * 120 - 10}%`,
-                                fontSize: `${Math.random() * 4 + 1}rem`,
-                                animationDelay: `${Math.random() * 5}s`,
-                                animationDuration: `${Math.random() * 10 + 10}s`,
-                                transform: `rotate(${Math.random() * 360}deg)`
-                            }}
-                        >
-                            ❤️
-                        </div>
-                    ))}
+                {/* Background Floating Hearts - Evenly Distributed */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                    {[...Array(25)].map((_, i) => {
+                        // Grid Distribution: 5 columns x 5 rows
+                        const cols = 5;
+                        const rows = 5;
+                        const col = i % cols;
+                        const row = Math.floor(i / cols);
+
+                        // Add some randomness within grid cell
+                        const left = (col / cols) * 100 + Math.random() * (100 / cols) * 0.5; // Randomness within 50% of cell width
+                        const top = (row / rows) * 100 + Math.random() * (100 / rows) * 0.5; // Randomness within 50% of cell height
+
+                        return (
+                            <div key={i}
+                                className="absolute text-pink-300 animate-float select-none transition-opacity duration-[3000ms] animate-pulse-opacity"
+                                style={{
+                                    left: `${left}%`,
+                                    top: `${top}%`,
+                                    fontSize: `${Math.random() * 3 + 1.5}rem`,
+                                    animationDelay: `${Math.random() * 5}s`,
+                                    animationDuration: `${Math.random() * 5 + 6}s`, // Slower float
+                                    // Opacity will be handled by animate-pulse-opacity CSS class
+                                }}
+                            >
+                                ❤️
+                            </div>
+                        );
+                    })}
                 </div>
 
                 {/* Main Content */}
