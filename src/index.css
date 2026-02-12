@@ -10,7 +10,8 @@ body {
     height: 100%;
     overflow: hidden;
     /* Prevent scrollbars */
-    background-color: #0f172a;
+    background-color: #ffe4e6;
+    /* Soft Warm Pink */
 }
 
 canvas {

@@ -23,9 +23,10 @@ export const UIOverlay = () => {
 
     if (gameState === 'welcome') {
         return (
+            // Full screen intro page
             <div className="absolute inset-0 flex items-center justify-center bg-pink-100 z-50">
-                {/* Valentine's Card Container */}
-                <div className="relative w-full max-w-lg aspect-[3/4] bg-white shadow-2xl rounded-lg p-8 border-8 border-pink-200 flex flex-col items-center justify-center text-center transform hover:scale-105 transition-transform duration-500 cursor-pointer"
+                {/* Valentine's Card Container - Centered and Elegant */}
+                <div className="relative w-full max-w-lg aspect-[3/4] bg-white shadow-2xl rounded-xl p-10 border-[12px] border-pink-200 flex flex-col items-center justify-center text-center transform hover:scale-[1.02] transition-transform duration-500 cursor-pointer"
                     onClick={() => useGameStore.getState().setGameState('playing')}
                 >
                     {/* Decorative Hearts */}
