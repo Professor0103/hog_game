@@ -48,87 +48,85 @@ export function MobileControls() {
         >
             <div
                 ref={containerRef}
-                className="fixed bottom-6 left-4 flex items-end gap-4 md:bottom-8 md:left-6 mobile-controls-only"
+                className="mobile-controls-only fixed bottom-8 left-1/2 flex -translate-x-1/2 items-end justify-center gap-6"
                 style={{
                     pointerEvents: 'auto',
                     touchAction: 'none',
                     WebkitUserSelect: 'none',
                     userSelect: 'none',
-                    minWidth: 140,
-                    minHeight: 140,
                 }}
             >
-                {/* D-pad - 48px min touch targets */}
-                <div className="grid grid-cols-3 grid-rows-3 gap-1 place-items-center select-none" style={{ width: 132, height: 132 }}>
+                {/* D-pad – bottom center, large black rounded segments with X gap (like reference) */}
+                <div className="grid grid-cols-3 grid-rows-3 gap-2 place-items-center select-none" style={{ width: 220, height: 220 }}>
                     <div />
                     <button
                         type="button"
                         aria-label="Forward"
-                        className="min-w-[48px] min-h-[48px] w-12 h-12 rounded-xl bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-xl"
-                    onPointerDown={(e) => { prevent(e); setMobileKey('forward', true); }}
-                    onPointerUp={(e) => { prevent(e); setMobileKey('forward', false); }}
-                    onPointerLeave={() => setMobileKey('forward', false)}
-                    onTouchStart={(e) => { prevent(e); setMobileKey('forward', true); }}
-                    onTouchEnd={(e) => { prevent(e); setMobileKey('forward', false); }}
-                >
-                    ▲
-                </button>
-                <div />
+                        className="min-w-[68px] min-h-[68px] w-[68px] h-[68px] rounded-2xl bg-white/25 backdrop-blur-sm text-gray-900 shadow-lg active:bg-white/40 active:scale-95 flex items-center justify-center text-2xl transition-transform border border-white/40"
+                        onPointerDown={(e) => { prevent(e); setMobileKey('forward', true); }}
+                        onPointerUp={(e) => { prevent(e); setMobileKey('forward', false); }}
+                        onPointerLeave={() => setMobileKey('forward', false)}
+                        onTouchStart={(e) => { prevent(e); setMobileKey('forward', true); }}
+                        onTouchEnd={(e) => { prevent(e); setMobileKey('forward', false); }}
+                    >
+                        ▲
+                    </button>
+                    <div />
+                    <button
+                        type="button"
+                        aria-label="Left"
+                        className="min-w-[68px] min-h-[68px] w-[68px] h-[68px] rounded-2xl bg-white/25 backdrop-blur-sm text-gray-900 shadow-lg active:bg-white/40 active:scale-95 flex items-center justify-center text-2xl transition-transform border border-white/40"
+                        onPointerDown={(e) => { prevent(e); setMobileKey('left', true); }}
+                        onPointerUp={(e) => { prevent(e); setMobileKey('left', false); }}
+                        onPointerLeave={() => setMobileKey('left', false)}
+                        onTouchStart={(e) => { prevent(e); setMobileKey('left', true); }}
+                        onTouchEnd={(e) => { prevent(e); setMobileKey('left', false); }}
+                    >
+                        ◀
+                    </button>
+                    <div className="w-[68px] h-[68px]" />
+                    <button
+                        type="button"
+                        aria-label="Right"
+                        className="min-w-[68px] min-h-[68px] w-[68px] h-[68px] rounded-2xl bg-white/25 backdrop-blur-sm text-gray-900 shadow-lg active:bg-white/40 active:scale-95 flex items-center justify-center text-2xl transition-transform border border-white/40"
+                        onPointerDown={(e) => { prevent(e); setMobileKey('right', true); }}
+                        onPointerUp={(e) => { prevent(e); setMobileKey('right', false); }}
+                        onPointerLeave={() => setMobileKey('right', false)}
+                        onTouchStart={(e) => { prevent(e); setMobileKey('right', true); }}
+                        onTouchEnd={(e) => { prevent(e); setMobileKey('right', false); }}
+                    >
+                        ▶
+                    </button>
+                    <div />
+                    <button
+                        type="button"
+                        aria-label="Backward"
+                        className="min-w-[68px] min-h-[68px] w-[68px] h-[68px] rounded-2xl bg-white/25 backdrop-blur-sm text-gray-900 shadow-lg active:bg-white/40 active:scale-95 flex items-center justify-center text-2xl transition-transform border border-white/40"
+                        onPointerDown={(e) => { prevent(e); setMobileKey('backward', true); }}
+                        onPointerUp={(e) => { prevent(e); setMobileKey('backward', false); }}
+                        onPointerLeave={() => setMobileKey('backward', false)}
+                        onTouchStart={(e) => { prevent(e); setMobileKey('backward', true); }}
+                        onTouchEnd={(e) => { prevent(e); setMobileKey('backward', false); }}
+                    >
+                        ▼
+                    </button>
+                    <div />
+                </div>
+                {/* Jump – space bar style: wide bar, same black look */}
                 <button
                     type="button"
-                    aria-label="Left"
-                    className="min-w-[48px] min-h-[48px] w-12 h-12 rounded-xl bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-xl"
-                    onPointerDown={(e) => { prevent(e); setMobileKey('left', true); }}
-                    onPointerUp={(e) => { prevent(e); setMobileKey('left', false); }}
-                    onPointerLeave={() => setMobileKey('left', false)}
-                    onTouchStart={(e) => { prevent(e); setMobileKey('left', true); }}
-                    onTouchEnd={(e) => { prevent(e); setMobileKey('left', false); }}
+                    aria-label="Jump"
+                    className="min-h-[72px] w-[120px] rounded-2xl bg-black text-white shadow-lg active:bg-gray-800 active:scale-95 flex items-center justify-center text-sm font-medium uppercase tracking-wider select-none transition-transform"
+                    onPointerDown={(e) => { prevent(e); setMobileKey('jump', true); }}
+                    onPointerUp={(e) => { prevent(e); setMobileKey('jump', false); }}
+                    onPointerLeave={() => setMobileKey('jump', false)}
+                    onTouchStart={(e) => { prevent(e); setMobileKey('jump', true); }}
+                    onTouchEnd={(e) => { prevent(e); setMobileKey('jump', false); }}
                 >
-                    ◀
+                    Space
                 </button>
-                <div className="w-12 h-12" />
-                <button
-                    type="button"
-                    aria-label="Right"
-                    className="min-w-[48px] min-h-[48px] w-12 h-12 rounded-xl bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-xl"
-                    onPointerDown={(e) => { prevent(e); setMobileKey('right', true); }}
-                    onPointerUp={(e) => { prevent(e); setMobileKey('right', false); }}
-                    onPointerLeave={() => setMobileKey('right', false)}
-                    onTouchStart={(e) => { prevent(e); setMobileKey('right', true); }}
-                    onTouchEnd={(e) => { prevent(e); setMobileKey('right', false); }}
-                >
-                    ▶
-                </button>
-                <div />
-                <button
-                    type="button"
-                    aria-label="Backward"
-                    className="min-w-[48px] min-h-[48px] w-12 h-12 rounded-xl bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-xl"
-                    onPointerDown={(e) => { prevent(e); setMobileKey('backward', true); }}
-                    onPointerUp={(e) => { prevent(e); setMobileKey('backward', false); }}
-                    onPointerLeave={() => setMobileKey('backward', false)}
-                    onTouchStart={(e) => { prevent(e); setMobileKey('backward', true); }}
-                    onTouchEnd={(e) => { prevent(e); setMobileKey('backward', false); }}
-                >
-                    ▼
-                </button>
-                <div />
             </div>
-            {/* Jump - 48px min touch target */}
-            <button
-                type="button"
-                aria-label="Jump"
-                className="min-w-[48px] min-h-[48px] w-14 h-14 rounded-full bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-sm font-bold text-pink-600 select-none"
-                onPointerDown={(e) => { prevent(e); setMobileKey('jump', true); }}
-                onPointerUp={(e) => { prevent(e); setMobileKey('jump', false); }}
-                onPointerLeave={() => setMobileKey('jump', false)}
-                onTouchStart={(e) => { prevent(e); setMobileKey('jump', true); }}
-                onTouchEnd={(e) => { prevent(e); setMobileKey('jump', false); }}
-            >
-                Jump
-            </button>
         </div>
-    </div>
     );
 
     return createPortal(controlsUI, document.body);
