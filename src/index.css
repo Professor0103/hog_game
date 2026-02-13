@@ -106,3 +106,122 @@ canvas {
     }
 }
 
+/* D-pad + Space: true center, bigger, Space underneath, adapt portrait/landscape */
+.mobile-controls-container {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 99999;
+    /* Portrait: near bottom with safe area */
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px) + 0.5rem);
+}
+/* Landscape: less bottom padding so controls don't overlap scene */
+@media (orientation: landscape) and (max-height: 500px) {
+    .mobile-controls-container {
+        bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+        gap: 0.5rem;
+    }
+}
+@media (orientation: landscape) {
+    .mobile-controls-container {
+        bottom: max(0.75rem, env(safe-area-inset-bottom, 0px) + 0.25rem);
+    }
+}
+
+.mobile-dpad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.5rem;
+    place-items: center;
+    user-select: none;
+    width: 280px;
+    height: 280px;
+}
+@media (orientation: landscape) and (max-height: 500px) {
+    .mobile-dpad-grid {
+        width: 220px;
+        height: 220px;
+        gap: 0.35rem;
+    }
+}
+
+.mobile-dpad-btn {
+    min-width: 84px;
+    min-height: 84px;
+    width: 84px;
+    height: 84px;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(6px);
+    color: #111;
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    transition: transform 0.1s, background 0.1s;
+}
+.mobile-dpad-btn:active {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0.96);
+}
+@media (orientation: landscape) and (max-height: 500px) {
+    .mobile-dpad-btn {
+        min-width: 64px;
+        min-height: 64px;
+        width: 64px;
+        height: 64px;
+        font-size: 1.35rem;
+    }
+}
+
+.mobile-dpad-spacer {
+    width: 84px;
+    height: 84px;
+}
+@media (orientation: landscape) and (max-height: 500px) {
+    .mobile-dpad-spacer {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+.mobile-space-btn {
+    min-height: 56px;
+    width: 200px;
+    border-radius: 1rem;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s, background 0.1s;
+}
+.mobile-space-btn:active {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(0.98);
+}
+@media (orientation: landscape) and (max-height: 500px) {
+    .mobile-space-btn {
+        min-height: 44px;
+        width: 160px;
+        font-size: 0.75rem;
+    }
+}
+@media (orientation: landscape) {
+    .mobile-space-btn {
+        width: min(200px, 45vw);
+    }
+}
+

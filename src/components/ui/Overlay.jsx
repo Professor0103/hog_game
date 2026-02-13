@@ -48,7 +48,7 @@ export function MobileControls() {
         >
             <div
                 ref={containerRef}
-                className="mobile-controls-only fixed bottom-8 left-1/2 flex -translate-x-1/2 items-end justify-center gap-6"
+                className="mobile-controls-container"
                 style={{
                     pointerEvents: 'auto',
                     touchAction: 'none',
@@ -56,13 +56,13 @@ export function MobileControls() {
                     userSelect: 'none',
                 }}
             >
-                {/* D-pad – bottom center, large black rounded segments with X gap (like reference) */}
-                <div className="grid grid-cols-3 grid-rows-3 gap-2 place-items-center select-none" style={{ width: 220, height: 220 }}>
+                {/* D-pad – WASD layout: up=forward, left=left, down=back, right=right; arrows only */}
+                <div className="mobile-dpad-grid">
                     <div />
                     <button
                         type="button"
                         aria-label="Forward"
-                        className="min-w-[68px] min-h-[68px] w-[68px] h-[68px] rounded-2xl bg-white/25 backdrop-blur-sm text-gray-900 shadow-lg active:bg-white/40 active:scale-95 flex items-center justify-center text-2xl transition-transform border border-white/40"
+                        className="mobile-dpad-btn"
                         onPointerDown={(e) => { prevent(e); setMobileKey('forward', true); }}
                         onPointerUp={(e) => { prevent(e); setMobileKey('forward', false); }}
                         onPointerLeave={() => setMobileKey('forward', false)}
@@ -75,7 +75,7 @@ export function MobileControls() {
                     <button
                         type="button"
                         aria-label="Left"
-                        className="min-w-[68px] min-h-[68px] w-[68px] h-[68px] rounded-2xl bg-white/25 backdrop-blur-sm text-gray-900 shadow-lg active:bg-white/40 active:scale-95 flex items-center justify-center text-2xl transition-transform border border-white/40"
+                        className="mobile-dpad-btn"
                         onPointerDown={(e) => { prevent(e); setMobileKey('left', true); }}
                         onPointerUp={(e) => { prevent(e); setMobileKey('left', false); }}
                         onPointerLeave={() => setMobileKey('left', false)}
@@ -84,11 +84,11 @@ export function MobileControls() {
                     >
                         ◀
                     </button>
-                    <div className="w-[68px] h-[68px]" />
+                    <div className="mobile-dpad-spacer" />
                     <button
                         type="button"
                         aria-label="Right"
-                        className="min-w-[68px] min-h-[68px] w-[68px] h-[68px] rounded-2xl bg-white/25 backdrop-blur-sm text-gray-900 shadow-lg active:bg-white/40 active:scale-95 flex items-center justify-center text-2xl transition-transform border border-white/40"
+                        className="mobile-dpad-btn"
                         onPointerDown={(e) => { prevent(e); setMobileKey('right', true); }}
                         onPointerUp={(e) => { prevent(e); setMobileKey('right', false); }}
                         onPointerLeave={() => setMobileKey('right', false)}
@@ -101,7 +101,7 @@ export function MobileControls() {
                     <button
                         type="button"
                         aria-label="Backward"
-                        className="min-w-[68px] min-h-[68px] w-[68px] h-[68px] rounded-2xl bg-white/25 backdrop-blur-sm text-gray-900 shadow-lg active:bg-white/40 active:scale-95 flex items-center justify-center text-2xl transition-transform border border-white/40"
+                        className="mobile-dpad-btn"
                         onPointerDown={(e) => { prevent(e); setMobileKey('backward', true); }}
                         onPointerUp={(e) => { prevent(e); setMobileKey('backward', false); }}
                         onPointerLeave={() => setMobileKey('backward', false)}
@@ -112,11 +112,11 @@ export function MobileControls() {
                     </button>
                     <div />
                 </div>
-                {/* Jump – space bar style: wide bar, same black look */}
+                {/* Space bar underneath – adapts with orientation */}
                 <button
                     type="button"
                     aria-label="Jump"
-                    className="min-h-[72px] w-[120px] rounded-2xl bg-black text-white shadow-lg active:bg-gray-800 active:scale-95 flex items-center justify-center text-sm font-medium uppercase tracking-wider select-none transition-transform"
+                    className="mobile-space-btn"
                     onPointerDown={(e) => { prevent(e); setMobileKey('jump', true); }}
                     onPointerUp={(e) => { prevent(e); setMobileKey('jump', false); }}
                     onPointerLeave={() => setMobileKey('jump', false)}
