@@ -9,7 +9,7 @@ const isMobileOrTouch = () =>
         window.matchMedia('(max-width: 768px)').matches
     );
 
-function MobileControls() {
+export function MobileControls() {
     const setMobileKey = useGameStore((s) => s.setMobileKey);
     const clearMobileMovement = useGameStore((s) => s.clearMobileMovement);
     const [visible, setVisible] = useState(false);
@@ -28,11 +28,10 @@ function MobileControls() {
         e.preventDefault();
         e.stopPropagation();
     };
-
     return (
         <div
             className="fixed bottom-6 left-4 flex items-end gap-4 md:bottom-8 md:left-6"
-            style={{ zIndex: 202, pointerEvents: 'auto', touchAction: 'none' }}
+            style={{ zIndex: 202, touchAction: 'none', WebkitUserSelect: 'none', userSelect: 'none' }}
         >
             {/* D-pad */}
             <div className="grid grid-cols-3 grid-rows-3 gap-0.5 place-items-center select-none" style={{ width: 120, height: 120 }}>
@@ -44,6 +43,8 @@ function MobileControls() {
                     onPointerDown={(e) => { prevent(e); setMobileKey('forward', true); }}
                     onPointerUp={(e) => { prevent(e); setMobileKey('forward', false); }}
                     onPointerLeave={() => setMobileKey('forward', false)}
+                    onTouchStart={(e) => { prevent(e); setMobileKey('forward', true); }}
+                    onTouchEnd={(e) => { prevent(e); setMobileKey('forward', false); }}
                 >
                     ▲
                 </button>
@@ -55,6 +56,8 @@ function MobileControls() {
                     onPointerDown={(e) => { prevent(e); setMobileKey('left', true); }}
                     onPointerUp={(e) => { prevent(e); setMobileKey('left', false); }}
                     onPointerLeave={() => setMobileKey('left', false)}
+                    onTouchStart={(e) => { prevent(e); setMobileKey('left', true); }}
+                    onTouchEnd={(e) => { prevent(e); setMobileKey('left', false); }}
                 >
                     ◀
                 </button>
@@ -66,6 +69,8 @@ function MobileControls() {
                     onPointerDown={(e) => { prevent(e); setMobileKey('right', true); }}
                     onPointerUp={(e) => { prevent(e); setMobileKey('right', false); }}
                     onPointerLeave={() => setMobileKey('right', false)}
+                    onTouchStart={(e) => { prevent(e); setMobileKey('right', true); }}
+                    onTouchEnd={(e) => { prevent(e); setMobileKey('right', false); }}
                 >
                     ▶
                 </button>
@@ -77,6 +82,8 @@ function MobileControls() {
                     onPointerDown={(e) => { prevent(e); setMobileKey('backward', true); }}
                     onPointerUp={(e) => { prevent(e); setMobileKey('backward', false); }}
                     onPointerLeave={() => setMobileKey('backward', false)}
+                    onTouchStart={(e) => { prevent(e); setMobileKey('backward', true); }}
+                    onTouchEnd={(e) => { prevent(e); setMobileKey('backward', false); }}
                 >
                     ▼
                 </button>
@@ -90,6 +97,8 @@ function MobileControls() {
                 onPointerDown={(e) => { prevent(e); setMobileKey('jump', true); }}
                 onPointerUp={(e) => { prevent(e); setMobileKey('jump', false); }}
                 onPointerLeave={() => setMobileKey('jump', false)}
+                onTouchStart={(e) => { prevent(e); setMobileKey('jump', true); }}
+                onTouchEnd={(e) => { prevent(e); setMobileKey('jump', false); }}
             >
                 Jump
             </button>
@@ -245,7 +254,6 @@ export const UIOverlay = () => {
                     {heartsCollected} / {totalHearts} hearts
                 </div>
             </div>
-            <MobileControls />
         </>
     );
 };

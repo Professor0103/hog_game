@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { GameScene } from './components/3d/Scene';
-import { UIOverlay } from './components/ui/Overlay';
+import { UIOverlay, MobileControls } from './components/ui/Overlay';
 import ErrorBoundary from './components/ErrorBoundary';
 import { useGameStore } from './store/gameStore';
 
@@ -20,6 +20,7 @@ function App() {
                 <div className={`absolute inset-0 z-[100] ${['playing', 'memory_view', 'dialogue'].includes(gameState) ? 'pointer-events-none' : ''}`}>
                     <UIOverlay />
                 </div>
+                {gameState === 'playing' && <MobileControls />}
             </div>
         </ErrorBoundary>
     );
