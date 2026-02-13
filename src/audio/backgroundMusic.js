@@ -1,9 +1,8 @@
 /**
  * Background music starts when the user clicks "Begin Our Journey" (user gesture required by browsers).
- * Place your audio file in public/music/ and name it to match MUSIC_SRC, or update MUSIC_SRC below.
+ * Uses Vite base URL so it works on GitHub Pages (e.g. /hog_game/music/background.mp3).
  */
-
-const MUSIC_SRC = '/music/background.mp3';
+const MUSIC_SRC = `${import.meta.env.BASE_URL}music/background.mp3`;
 
 let audio = null;
 

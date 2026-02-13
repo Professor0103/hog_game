@@ -17,12 +17,21 @@ function getDefaultMemories() {
     ];
 }
 
+const defaultMobileMovement = () => ({ forward: false, backward: false, left: false, right: false, jump: false });
+
 export const useGameStore = create((set) => ({
     gameState: 'welcome',
     heartsCollected: 0,
     totalHearts: 5,
     memories: getDefaultMemories(),
     currentMemory: null,
+
+    // Mobile/touch movement (D-pad) — merged with keyboard in Player
+    mobileMovement: defaultMobileMovement(),
+    setMobileKey: (key, value) => set((state) => ({
+        mobileMovement: { ...state.mobileMovement, [key]: value },
+    })),
+    clearMobileMovement: () => set({ mobileMovement: defaultMobileMovement() }),
 
     // Pig dialogue — edit these strings for the final conversation (click pig after all hearts).
     dialogueStep: 0,
@@ -61,6 +70,7 @@ export const useGameStore = create((set) => ({
         currentMemory: null,
         dialogueStep: 0,
         memories: getDefaultMemories(),
+        mobileMovement: defaultMobileMovement(),
     })),
     nextDialogue: () => set((state) => {
         if (state.dialogueStep < 0) return { dialogueStep: 0 };

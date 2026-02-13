@@ -42,7 +42,13 @@ const useKeyboard = () => {
 export const Player = () => {
     const ref = useRef();
     const { camera } = useThree();
-    const { forward, backward, left, right, jump } = useKeyboard();
+    const keyboard = useKeyboard();
+    const mobile = useGameStore(state => state.mobileMovement);
+    const forward = keyboard.forward || mobile.forward;
+    const backward = keyboard.backward || mobile.backward;
+    const left = keyboard.left || mobile.left;
+    const right = keyboard.right || mobile.right;
+    const jump = keyboard.jump || mobile.jump;
     const gameState = useGameStore(state => state.gameState);
 
     // Animation state

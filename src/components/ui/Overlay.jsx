@@ -3,6 +3,100 @@ import { createPortal } from 'react-dom';
 import { useGameStore } from '../../store/gameStore';
 import { startBackgroundMusic } from '../../audio/backgroundMusic';
 
+const isMobileOrTouch = () =>
+    typeof window !== 'undefined' && (
+        window.matchMedia('(pointer: coarse)').matches ||
+        window.matchMedia('(max-width: 768px)').matches
+    );
+
+function MobileControls() {
+    const setMobileKey = useGameStore((s) => s.setMobileKey);
+    const clearMobileMovement = useGameStore((s) => s.clearMobileMovement);
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        setVisible(isMobileOrTouch());
+    }, []);
+
+    useEffect(() => {
+        return () => clearMobileMovement();
+    }, [clearMobileMovement]);
+
+    if (!visible) return null;
+
+    const prevent = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    return (
+        <div
+            className="fixed bottom-6 left-4 flex items-end gap-4 md:bottom-8 md:left-6"
+            style={{ zIndex: 202, pointerEvents: 'auto', touchAction: 'none' }}
+        >
+            {/* D-pad */}
+            <div className="grid grid-cols-3 grid-rows-3 gap-0.5 place-items-center select-none" style={{ width: 120, height: 120 }}>
+                <div />
+                <button
+                    type="button"
+                    aria-label="Forward"
+                    className="w-10 h-10 rounded-lg bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-lg"
+                    onPointerDown={(e) => { prevent(e); setMobileKey('forward', true); }}
+                    onPointerUp={(e) => { prevent(e); setMobileKey('forward', false); }}
+                    onPointerLeave={() => setMobileKey('forward', false)}
+                >
+                    ▲
+                </button>
+                <div />
+                <button
+                    type="button"
+                    aria-label="Left"
+                    className="w-10 h-10 rounded-lg bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-lg"
+                    onPointerDown={(e) => { prevent(e); setMobileKey('left', true); }}
+                    onPointerUp={(e) => { prevent(e); setMobileKey('left', false); }}
+                    onPointerLeave={() => setMobileKey('left', false)}
+                >
+                    ◀
+                </button>
+                <div className="w-10 h-10" />
+                <button
+                    type="button"
+                    aria-label="Right"
+                    className="w-10 h-10 rounded-lg bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-lg"
+                    onPointerDown={(e) => { prevent(e); setMobileKey('right', true); }}
+                    onPointerUp={(e) => { prevent(e); setMobileKey('right', false); }}
+                    onPointerLeave={() => setMobileKey('right', false)}
+                >
+                    ▶
+                </button>
+                <div />
+                <button
+                    type="button"
+                    aria-label="Backward"
+                    className="w-10 h-10 rounded-lg bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-lg"
+                    onPointerDown={(e) => { prevent(e); setMobileKey('backward', true); }}
+                    onPointerUp={(e) => { prevent(e); setMobileKey('backward', false); }}
+                    onPointerLeave={() => setMobileKey('backward', false)}
+                >
+                    ▼
+                </button>
+                <div />
+            </div>
+            {/* Jump */}
+            <button
+                type="button"
+                aria-label="Jump"
+                className="w-14 h-14 rounded-full bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-sm font-bold text-pink-600 select-none"
+                onPointerDown={(e) => { prevent(e); setMobileKey('jump', true); }}
+                onPointerUp={(e) => { prevent(e); setMobileKey('jump', false); }}
+                onPointerLeave={() => setMobileKey('jump', false)}
+            >
+                Jump
+            </button>
+        </div>
+    );
+}
+
 export const UIOverlay = () => {
     const gameState = useGameStore((state) => state.gameState);
     const heartsCollected = useGameStore((state) => state.heartsCollected);
@@ -151,6 +245,7 @@ export const UIOverlay = () => {
                     {heartsCollected} / {totalHearts} hearts
                 </div>
             </div>
+            <MobileControls />
         </>
     );
 };
