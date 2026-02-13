@@ -4,7 +4,8 @@ import { Sky, ContactShadows, Grid, Float, Stars } from '@react-three/drei';
 import { Player } from './Player';
 import { NPC } from './NPC';
 import { Heart } from './Heart';
-import { Tree } from './Nature'; // New
+import { Tree } from './Nature';
+import { Flowers } from './Flowers';
 import { useGameStore } from '../../store/gameStore';
 
 export const GameScene = () => {
@@ -53,6 +54,8 @@ export const GameScene = () => {
             {memories.map((memory, i) => (
                 !memory.collected && <Heart key={memory.id} id={memory.id} position={heartPositions[i]} />
             ))}
+
+            <Flowers />
 
             <ContactShadows opacity={0.4} scale={20} blur={2} far={10} resolution={256} color="#000000" />
         </Canvas>

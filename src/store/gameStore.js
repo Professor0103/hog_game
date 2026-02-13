@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 
 const VALID_GAME_STATES = new Set(['welcome', 'playing', 'memory_view', 'dialogue', 'finished']);
-const STORAGE_KEY = 'hog-game-memory-customizations';
 
 function isValidHeartId(id) {
     return Number.isInteger(id) && id >= 1 && id <= 5;
 }
 
+// All text is in code — edit these arrays to change what appears in the game.
 function getDefaultMemories() {
     return [
         { id: 1, title: 'First Meeting', text: 'I remember the first time I saw you...', image: null, collected: false },
@@ -17,110 +17,56 @@ function getDefaultMemories() {
     ];
 }
 
-function getSavedCustomizations() {
-    try {
-        const s = localStorage.getItem(STORAGE_KEY);
-        return s ? JSON.parse(s) : {};
-    } catch {
-        return {};
-    }
-}
-
-function getInitialMemories() {
-    const defaults = getDefaultMemories();
-    const saved = getSavedCustomizations();
-    return defaults.map((m) => ({
-        ...m,
-        ...(saved[m.id] || {}),
-        id: m.id,
-        collected: false,
-    }));
-}
-
-function saveCustomizations(memories) {
-    const obj = {};
-    memories.forEach((m) => {
-        obj[m.id] = { title: m.title, text: m.text, image: m.image ?? null };
-    });
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
-    } catch (_) {}
-}
-
 export const useGameStore = create((set) => ({
-    gameState: 'welcome', // welcome, playing, memory_view, dialogue, finished
+    gameState: 'welcome',
     heartsCollected: 0,
     totalHearts: 5,
-
-    memories: getInitialMemories(),
+    memories: getDefaultMemories(),
     currentMemory: null,
-    showCustomizeMemories: false,
 
-    // Dialogue
+    // Pig dialogue — edit these strings for the final conversation (click pig after all hearts).
     dialogueStep: 0,
     dialogueLines: [
-        "Pig: Oink! You made it!",
-        "Pig: I've been waiting for you...",
-        "Pig: Will you be my Valentine? 💖"
+        "Oink! You made it!",
+        "I've been waiting for you...",
+        "Will you be my Valentine? 💖"
     ],
 
-    // Actions
     setGameState: (state) => set(() => {
-        if (!VALID_GAME_STATES.has(state)) {
-            return {};
-        }
+        if (!VALID_GAME_STATES.has(state)) return {};
         return { gameState: state };
     }),
-    setShowCustomizeMemories: (show) => set({ showCustomizeMemories: show }),
     collectHeart: (id) => set((state) => {
-        if (!isValidHeartId(id)) {
-            return {};
-        }
-
-        const existingMemory = state.memories.find((memory) => memory.id === id);
-        if (!existingMemory || existingMemory.collected) {
-            return {};
-        }
-
-        const newMemories = state.memories.map(m =>
+        if (!isValidHeartId(id)) return {};
+        const existingMemory = state.memories.find((m) => m.id === id);
+        if (!existingMemory || existingMemory.collected) return {};
+        const newMemories = state.memories.map((m) =>
             m.id === id ? { ...m, collected: true } : m
         );
-        const memory = newMemories.find(m => m.id === id);
+        const memory = newMemories.find((m) => m.id === id);
         return {
             heartsCollected: newMemories.filter((m) => m.collected).length,
             memories: newMemories,
             currentMemory: memory,
-            gameState: 'memory_view'
+            gameState: 'memory_view',
         };
     }),
-    closeMemory: () => set((state) => ({
+    closeMemory: () => set(() => ({
         gameState: 'playing',
-        currentMemory: null
+        currentMemory: null,
     })),
-    updateMemory: (id, { title, text, image }) => set((state) => {
-        if (!isValidHeartId(id)) return {};
-        const next = state.memories.map((m) =>
-            m.id === id ? { ...m, title: title ?? m.title, text: text ?? m.text, image: image !== undefined ? image : m.image } : m
-        );
-        saveCustomizations(next);
-        return { memories: next };
-    }),
     resetGame: () => set(() => ({
         gameState: 'welcome',
         heartsCollected: 0,
         currentMemory: null,
         dialogueStep: 0,
-        memories: getInitialMemories(),
+        memories: getDefaultMemories(),
     })),
     nextDialogue: () => set((state) => {
-        if (!Number.isInteger(state.dialogueStep) || state.dialogueStep < 0) {
-            return { dialogueStep: 0 };
-        }
-
+        if (state.dialogueStep < 0) return { dialogueStep: 0 };
         if (state.dialogueStep < state.dialogueLines.length - 1) {
             return { dialogueStep: state.dialogueStep + 1 };
-        } else {
-            return { gameState: 'finished' };
         }
+        return { gameState: 'finished' };
     }),
 }));

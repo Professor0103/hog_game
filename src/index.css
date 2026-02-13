@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Block Craft – Minecraft-style pixel font (from block-craft-font.zip) */
+@font-face {
+    font-family: 'Block Craft';
+    src: url('/fonts/block-craft/BlockCraftMedium-PVLzd.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
 html {
     margin: 0;
     padding: 0;
@@ -73,3 +82,17 @@ canvas {
     height: 100vh;
     height: 100dvh;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.banner-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+

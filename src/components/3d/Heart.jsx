@@ -4,8 +4,12 @@ import { Float } from '@react-three/drei';
 import * as THREE from 'three';
 import { useGameStore } from '../../store/gameStore';
 
+const _playerPos = new THREE.Vector3();
+const _heartPos = new THREE.Vector3();
+
 export const Heart = ({ position, id }) => {
     const collectHeart = useGameStore(state => state.collectHeart);
+    const gameState = useGameStore(state => state.gameState);
     const ref = useRef();
 
     // Create Heart Shape
@@ -32,13 +36,14 @@ export const Heart = ({ position, id }) => {
     };
 
     useFrame(({ scene }) => {
+        if (gameState !== 'playing') return;
         const player = scene.getObjectByName('player-group');
-        if (player && ref.current) {
-            // Simple distance check to the parent group position
-            const dist = player.position.distanceTo(ref.current.parent.position);
-            if (dist < 1.2) {
-                collectHeart(id);
-            }
+        if (!player || !ref.current?.parent) return;
+        player.getWorldPosition(_playerPos);
+        ref.current.parent.getWorldPosition(_heartPos);
+        const dist = _playerPos.distanceTo(_heartPos);
+        if (dist < 2.5) {
+            collectHeart(id);
         }
     });
 
