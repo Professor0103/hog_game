@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useGameStore } from '../../store/gameStore';
+import { startBackgroundMusic } from '../../audio/backgroundMusic';
 
 export const UIOverlay = () => {
     const gameState = useGameStore((state) => state.gameState);
@@ -79,7 +80,10 @@ export const UIOverlay = () => {
                             I hope this is better than my last site, upgraded skills now :]]
                         </p>
                         <button
-                            onClick={() => useGameStore.getState().setGameState('playing')}
+                            onClick={() => {
+                                useGameStore.getState().setGameState('playing');
+                                startBackgroundMusic();
+                            }}
                             className="inline-block px-12 py-6 text-2xl font-bold text-white bg-gradient-to-r from-pink-500 to-purple-500 rounded-full shadow-xl hover:opacity-95 hover:scale-105 transition-transform cursor-pointer"
                         >
                             ❤ Begin Our Journey
