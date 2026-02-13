@@ -3,43 +3,68 @@ import { createPortal } from 'react-dom';
 import { useGameStore } from '../../store/gameStore';
 import { startBackgroundMusic } from '../../audio/backgroundMusic';
 
-const isMobileOrTouch = () =>
-    typeof window !== 'undefined' && (
-        window.matchMedia('(pointer: coarse)').matches ||
-        window.matchMedia('(max-width: 768px)').matches
-    );
+const opts = { passive: false };
 
 export function MobileControls() {
     const setMobileKey = useGameStore((s) => s.setMobileKey);
     const clearMobileMovement = useGameStore((s) => s.clearMobileMovement);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        setVisible(isMobileOrTouch());
-    }, []);
+    const containerRef = useRef(null);
 
     useEffect(() => {
         return () => clearMobileMovement();
     }, [clearMobileMovement]);
 
-    if (!visible) return null;
+    /* Non-passive touch so preventDefault works on iOS (stops scroll/zoom) */
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const prevent = (e) => { e.preventDefault(); e.stopPropagation(); };
+        const onTouchStart = (e) => { prevent(e); };
+        const onTouchEnd = (e) => { prevent(e); };
+        el.addEventListener('touchstart', onTouchStart, opts);
+        el.addEventListener('touchend', onTouchEnd, opts);
+        return () => {
+            el.removeEventListener('touchstart', onTouchStart, opts);
+            el.removeEventListener('touchend', onTouchEnd, opts);
+        };
+    }, []);
 
     const prevent = (e) => {
         e.preventDefault();
         e.stopPropagation();
     };
-    return (
+
+    // Portal to document.body so controls are guaranteed on top of canvas (fixes mobile touch)
+    const controlsUI = (
         <div
-            className="fixed bottom-6 left-4 flex items-end gap-4 md:bottom-8 md:left-6"
-            style={{ zIndex: 202, touchAction: 'none', WebkitUserSelect: 'none', userSelect: 'none' }}
+            className="mobile-controls-layer"
+            style={{
+                position: 'fixed',
+                inset: 0,
+                zIndex: 99999,
+                pointerEvents: 'none',
+                touchAction: 'none',
+            }}
         >
-            {/* D-pad */}
-            <div className="grid grid-cols-3 grid-rows-3 gap-0.5 place-items-center select-none" style={{ width: 120, height: 120 }}>
-                <div />
-                <button
-                    type="button"
-                    aria-label="Forward"
-                    className="w-10 h-10 rounded-lg bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-lg"
+            <div
+                ref={containerRef}
+                className="fixed bottom-6 left-4 flex items-end gap-4 md:bottom-8 md:left-6 mobile-controls-only"
+                style={{
+                    pointerEvents: 'auto',
+                    touchAction: 'none',
+                    WebkitUserSelect: 'none',
+                    userSelect: 'none',
+                    minWidth: 140,
+                    minHeight: 140,
+                }}
+            >
+                {/* D-pad - 48px min touch targets */}
+                <div className="grid grid-cols-3 grid-rows-3 gap-1 place-items-center select-none" style={{ width: 132, height: 132 }}>
+                    <div />
+                    <button
+                        type="button"
+                        aria-label="Forward"
+                        className="min-w-[48px] min-h-[48px] w-12 h-12 rounded-xl bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-xl"
                     onPointerDown={(e) => { prevent(e); setMobileKey('forward', true); }}
                     onPointerUp={(e) => { prevent(e); setMobileKey('forward', false); }}
                     onPointerLeave={() => setMobileKey('forward', false)}
@@ -52,7 +77,7 @@ export function MobileControls() {
                 <button
                     type="button"
                     aria-label="Left"
-                    className="w-10 h-10 rounded-lg bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-lg"
+                    className="min-w-[48px] min-h-[48px] w-12 h-12 rounded-xl bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-xl"
                     onPointerDown={(e) => { prevent(e); setMobileKey('left', true); }}
                     onPointerUp={(e) => { prevent(e); setMobileKey('left', false); }}
                     onPointerLeave={() => setMobileKey('left', false)}
@@ -61,11 +86,11 @@ export function MobileControls() {
                 >
                     ◀
                 </button>
-                <div className="w-10 h-10" />
+                <div className="w-12 h-12" />
                 <button
                     type="button"
                     aria-label="Right"
-                    className="w-10 h-10 rounded-lg bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-lg"
+                    className="min-w-[48px] min-h-[48px] w-12 h-12 rounded-xl bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-xl"
                     onPointerDown={(e) => { prevent(e); setMobileKey('right', true); }}
                     onPointerUp={(e) => { prevent(e); setMobileKey('right', false); }}
                     onPointerLeave={() => setMobileKey('right', false)}
@@ -78,7 +103,7 @@ export function MobileControls() {
                 <button
                     type="button"
                     aria-label="Backward"
-                    className="w-10 h-10 rounded-lg bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-lg"
+                    className="min-w-[48px] min-h-[48px] w-12 h-12 rounded-xl bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-xl"
                     onPointerDown={(e) => { prevent(e); setMobileKey('backward', true); }}
                     onPointerUp={(e) => { prevent(e); setMobileKey('backward', false); }}
                     onPointerLeave={() => setMobileKey('backward', false)}
@@ -89,11 +114,11 @@ export function MobileControls() {
                 </button>
                 <div />
             </div>
-            {/* Jump */}
+            {/* Jump - 48px min touch target */}
             <button
                 type="button"
                 aria-label="Jump"
-                className="w-14 h-14 rounded-full bg-white/90 border-2 border-pink-400 shadow-lg active:bg-pink-100 flex items-center justify-center text-sm font-bold text-pink-600 select-none"
+                className="min-w-[48px] min-h-[48px] w-14 h-14 rounded-full bg-white/95 border-2 border-pink-400 shadow-lg active:bg-pink-200 flex items-center justify-center text-sm font-bold text-pink-600 select-none"
                 onPointerDown={(e) => { prevent(e); setMobileKey('jump', true); }}
                 onPointerUp={(e) => { prevent(e); setMobileKey('jump', false); }}
                 onPointerLeave={() => setMobileKey('jump', false)}
@@ -103,7 +128,10 @@ export function MobileControls() {
                 Jump
             </button>
         </div>
+    </div>
     );
+
+    return createPortal(controlsUI, document.body);
 }
 
 export const UIOverlay = () => {
