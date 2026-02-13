@@ -17,7 +17,7 @@ function App() {
                         </Suspense>
                     </div>
                 )}
-                <div className={`absolute inset-0 z-[100] ${gameState === 'playing' ? 'pointer-events-none' : ''}`}>
+                <div className={`absolute inset-0 z-[100] ${['playing', 'memory_view', 'dialogue'].includes(gameState) ? 'pointer-events-none' : ''}`}>
                     <UIOverlay />
                 </div>
             </div>

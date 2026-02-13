@@ -6,6 +6,7 @@ import { NPC } from './NPC';
 import { Heart } from './Heart';
 import { Tree } from './Nature';
 import { Flowers } from './Flowers';
+import { MemoryText3D } from './MemoryText3D';
 import { useGameStore } from '../../store/gameStore';
 
 export const GameScene = () => {
@@ -55,6 +56,7 @@ export const GameScene = () => {
                 !memory.collected && <Heart key={memory.id} id={memory.id} position={heartPositions[i]} />
             ))}
 
+            <MemoryText3D />
             <Flowers />
 
             <ContactShadows opacity={0.4} scale={20} blur={2} far={10} resolution={256} color="#000000" />

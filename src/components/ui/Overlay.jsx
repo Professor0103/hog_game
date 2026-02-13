@@ -73,10 +73,10 @@ export const UIOverlay = () => {
                             Happy Valentine's <br /> Day,
                         </h1>
                         <h1 className="text-6xl md:text-8xl font-bold text-pink-600 mb-10" style={{ fontFamily: 'Great Vibes, cursive' }}>
-                            My Love! 💕
+                            baby joe 💕
                         </h1>
                         <p className="text-gray-800 text-xl md:text-3xl mb-12 font-light">
-                            I've created something special for you — a journey through our most beautiful memories together.
+                            I hope this is better than my last site, upgraded skills now :]]
                         </p>
                         <button
                             onClick={() => useGameStore.getState().setGameState('playing')}
@@ -85,7 +85,7 @@ export const UIOverlay = () => {
                             ❤ Begin Our Journey
                         </button>
                         <p className="mt-8 text-pink-500 font-bold uppercase text-sm tracking-widest animate-pulse">
-                            ✨ Collect hearts to unlock our memories ✨
+                            Pig loves you
                         </p>
                     </div>
                 </div>
@@ -93,66 +93,7 @@ export const UIOverlay = () => {
         );
     }
 
-    // ——— Memory popup (heart collected) — render to body so it's always on top of canvas ———
-    if (gameState === 'memory_view' && currentMemory) {
-        const memoryPopup = (
-            <div className="fixed inset-0 flex items-center justify-center bg-black/60 p-4" style={{ zIndex: 10000 }}>
-                <div className="bg-white p-8 rounded-2xl shadow-2xl max-w-lg w-full border-4 border-pink-200 max-h-[90vh] overflow-auto">
-                    <div className="text-center">
-                        <div className="text-6xl mb-4">❤️</div>
-                        {currentMemory.image && (
-                            <div className="mb-6 rounded-xl overflow-hidden border-2 border-pink-200">
-                                <img src={currentMemory.image} alt="" className="w-full h-auto max-h-56 object-cover" />
-                            </div>
-                        )}
-                        <h2 className="text-2xl font-bold text-pink-600 mb-4" style={{ fontFamily: 'Dancing Script, cursive' }}>
-                            {currentMemory.title}
-                        </h2>
-                        <p className="text-gray-700 text-lg mb-8 italic whitespace-pre-wrap">"{currentMemory.text}"</p>
-                        <button
-                            className="bg-pink-500 text-white px-8 py-3 rounded-full font-bold hover:bg-pink-600"
-                            onClick={closeMemory}
-                        >
-                            ❤️ Keep Exploring ❤️
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-        return createPortal(memoryPopup, document.body);
-    }
-
-    // ——— Pig dialogue — render to body so it's always on top of canvas ———
-    if (gameState === 'dialogue') {
-        const dialogueUI = (
-            <>
-                <div className="fixed top-4 left-4 bg-white rounded-2xl shadow-xl border-2 border-pink-400 min-w-[180px] px-4 py-3" style={{ zIndex: 10001 }}>
-                    <div className="text-xs uppercase text-pink-500 font-semibold">Player</div>
-                    <div className="text-pink-600 font-bold text-lg" style={{ fontFamily: 'Dancing Script, cursive' }}>Marmot</div>
-                    <div className="flex gap-0.5 mt-1">
-                        {[...Array(totalHearts)].map((_, i) => (
-                            <span key={i} className={`text-xl ${i < heartsCollected ? 'opacity-100' : 'opacity-30'}`}>❤️</span>
-                        ))}
-                    </div>
-                    <div className="text-pink-600 font-bold text-sm font-mono mt-1">{heartsCollected}/{totalHearts}</div>
-                </div>
-                <div className="fixed inset-x-0 bottom-6 flex justify-center px-4" style={{ zIndex: 10001 }}>
-                    <div
-                        className="bg-white p-6 rounded-2xl shadow-2xl max-w-2xl w-full border-4 border-pink-300 cursor-pointer hover:bg-pink-50 transition-colors"
-                        onClick={nextDialogue}
-                    >
-                        <div className="flex items-center gap-3 mb-2">
-                            <span className="text-3xl">🐷</span>
-                            <h3 className="text-xl font-bold text-pink-600">Piggy says:</h3>
-                        </div>
-                        <p className="text-xl text-gray-800 font-medium">{dialogueLines[dialogueStep]}</p>
-                        <p className="text-right text-sm text-pink-500 mt-3 font-semibold">Click to continue ➤</p>
-                    </div>
-                </div>
-            </>
-        );
-        return createPortal(dialogueUI, document.body);
-    }
+    // memory_view and dialogue: text is shown as 3D text in the scene (MemoryText3D + NPC), same style as "Click me!" — no HTML popup here
 
     // ——— Finished ——— render to body so it's on top
     if (gameState === 'finished') {

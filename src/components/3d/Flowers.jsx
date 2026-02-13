@@ -98,7 +98,7 @@ export function Flowers() {
         return positions;
     }, []);
 
-    if (gameState !== 'finished') return null;
+    if (gameState !== 'finished' && gameState !== 'dialogue') return null;
 
     return (
         <group>
